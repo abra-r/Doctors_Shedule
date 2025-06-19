@@ -41,32 +41,13 @@ public class DoctorScheduleListActivity extends AppCompatActivity implements Doc
         currentUser = FirebaseAuth.getInstance().getCurrentUser();
 
         if (currentUser != null) {
-            loadSchedule(currentUser.getUid());
+            loadAllDoctorSchedules();
         } else {
             Toast.makeText(this, "User not authenticated", Toast.LENGTH_SHORT).show();
         }
     }
 
-    private void loadSchedule(String doctorUid) {
-        firestore.collection("doctor_schedules")
-                .document(doctorUid)
-                .collection("schedules")
-                .get()
-                .addOnSuccessListener(querySnapshot -> {
-                    scheduleList.clear();
-                    for (QueryDocumentSnapshot doc : querySnapshot) {
-                        String clinicName = doc.getString("clinicName");
-                        String location = doc.getString("clinicAddress");
-                        String time = doc.getString("formattedDateTime");
-                        int patientCount = 0; // Optional: track if implemented later
-
-                        DoctorSchedule schedule = new DoctorSchedule(clinicName, location, time, patientCount);
-                        scheduleList.add(schedule);
-                    }
-                    adapter.notifyDataSetChanged();
-                })
-                .addOnFailureListener(e -> Toast.makeText(this, "Failed to load schedules", Toast.LENGTH_SHORT).show());
-    }
+    
 
     @Override
     public void onItemClick(DoctorSchedule schedule) {
@@ -76,4 +57,24 @@ public class DoctorScheduleListActivity extends AppCompatActivity implements Doc
         intent.putExtra("time", schedule.getTime());
         startActivity(intent);
     }
+    private void loadAllDoctorSchedules() {
+        firestore.collectionGroup("schedules")
+                .get()
+                .addOnSuccessListener(querySnapshot -> {
+                    scheduleList.clear();
+                    for (QueryDocumentSnapshot doc : querySnapshot) {
+                        String clinicName = doc.getString("clinicName");
+                        String location = doc.getString("clinicAddress");
+                        String time = doc.getString("formattedDateTime");
+                        int patientCount = 0;
+
+                        DoctorSchedule schedule = new DoctorSchedule(clinicName, location, time, patientCount);
+                        scheduleList.add(schedule);
+                    }
+                    adapter.notifyDataSetChanged();
+                })
+                .addOnFailureListener(e -> Toast.makeText(this, "Failed to load schedules", Toast.LENGTH_SHORT).show());
+
+    }
+
 }
