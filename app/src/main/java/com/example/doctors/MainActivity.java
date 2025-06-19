@@ -1,24 +1,59 @@
 package com.example.doctors;
 
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
 
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
+
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 public class MainActivity extends AppCompatActivity {
+
+    private static final int SPLASH_DELAY = 1000;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_login);
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.login), (v, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-            return insets;
-        });
+        setContentView(R.layout.activity_main);
+
+        new Handler().postDelayed(() -> {
+            FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+
+            if (currentUser != null && currentUser.isEmailVerified()) {
+                SharedPreferences prefs = getSharedPreferences("UserPrefs", MODE_PRIVATE);
+                String role = prefs.getString("role", null);
+
+                if (role != null) {
+
+                    Intent intent;
+                    switch (role) {
+                        case "general_user":
+                            intent = new Intent(MainActivity.this, HomeActivity.class);
+                            break;
+                        case "doctor":
+                            intent = new Intent(MainActivity.this, HomeActivity.class);
+                            break;
+                        case "clinic_manager":
+                            intent = new Intent(MainActivity.this, HomeActivity.class);
+                            break;
+                        default:
+                            intent = new Intent(MainActivity.this, LoginActivity.class);
+                            break;
+                    }
+                    startActivity(intent);
+                } else {
+
+                    startActivity(new Intent(MainActivity.this, HomeActivity.class));
+                }
+            } else {
+
+                startActivity(new Intent(MainActivity.this, HomeActivity .class));
+            }
+
+            finish();
+        }, SPLASH_DELAY);
     }
 }

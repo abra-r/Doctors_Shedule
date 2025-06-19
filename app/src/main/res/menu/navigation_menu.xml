@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/nav_home"
+        android:title="Home"
+        android:icon="@drawable/home_icon" />
+
+    <item
+        android:id="@+id/nav_doctor_list"
+        android:title="Doctor List"
+        android:icon="@drawable/doctor_list_icon" />
+
+    <item
+        android:id="@+id/nav_health_blog"
+        android:title="Health Blog"
+        android:icon="@drawable/blog_icon" />
+    <item
+        android:id="@+id/logout"
+        android:title="Logout"
+        android:icon="@android:drawable/ic_lock_power_off"
+        />
+
+
+</menu>
+
+

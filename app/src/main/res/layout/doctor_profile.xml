@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp"
+    android:background="@color/white">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+
+            <ImageView
+                android:id="@+id/menuIcon"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:src="@drawable/menu_icon"
+                android:layout_alignParentStart="true"
+                android:layout_margin="10dp"
+                android:contentDescription="Menu" />
+
+
+            <ImageView
+                android:id="@+id/profileIcon"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:src="@drawable/account_icon"
+                android:layout_alignParentEnd="true"
+                android:layout_margin="10dp"
+                android:contentDescription="Profile" />
+        </RelativeLayout>
+
+
+        <ImageView
+            android:id="@+id/doctorImage"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:src="@drawable/doctor_image"
+            android:layout_gravity="center"
+            android:layout_marginTop="20dp"
+            android:scaleType="centerCrop"
+            android:background="@drawable/circle_bacgrpund"/>
+
+
+        <TextView
+            android:id="@+id/doctorName"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:text="Dr. Jemini"
+            android:textSize="22sp"
+            android:textStyle="bold" />
+
+
+        <TextView
+            android:id="@+id/doctorSpecialty"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Cardiologist"
+            android:textSize="16sp"
+            android:textColor="#616161"
+            android:layout_gravity="center"
+            android:layout_marginTop="5dp"/>
+
+
+        <TextView
+            android:id="@+id/doctorDegree"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="MBBS, MD"
+            android:textSize="16sp"
+            android:textColor="#616161"
+            android:layout_gravity="center"
+            android:layout_marginTop="5dp"/>
+
+
+        <TextView
+            android:id="@+id/doctorDescription"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Dr. gimeni Doe is a highly experienced cardiologist with over 15 years of experience."
+            android:textSize="16sp"
+            android:padding="10dp"
+            android:layout_marginTop="20dp"/>
+
+
+
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="20dp"
+            android:padding="10dp"
+            android:background="#DCDADA">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Contact for Appointment:"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:layout_marginBottom="5dp"/>
+
+            <TextView
+                android:id="@+id/doctorContact"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="+123 456 7890"
+                android:textSize="16sp"
+                android:textColor="#00BCD4"/>
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="20dp"
+            android:padding="10dp"
+            android:background="#DCDADA">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Schedule:"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:layout_marginBottom="5dp"/>
+
+            <TextView
+                android:id="@+id/doctorSchedule"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Monday - Friday: 10 AM - 5 PM"
+                android:textSize="16sp"
+                android:textColor="#000000"/>
+        </LinearLayout>
+        <Button
+            android:id="@+id/getAppointmentBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Get Appointment"
+            android:layout_gravity="center"
+            android:layout_marginTop="20dp"/>
+
+        <Button
+            android:id="@+id/sendRequestBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Send Request to Doctor"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            />
+
+    </LinearLayout>
+
+</ScrollView>

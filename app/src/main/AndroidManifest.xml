@@ -1,14 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
 
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/doctor_image"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@drawable/doctor_image"
         android:supportsRtl="true"
         android:theme="@style/Theme.Doctors"
         tools:targetApi="31">
@@ -21,6 +25,34 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyB44EPbEm297aN27YKUY0j8QYEugcrD9Ss"/>
+
+
+        <activity android:name=".LoginActivity"/>
+        <activity android:name=".HomeActivity"/>
+        <activity android:name=".DoctorListActivity"/>
+        <activity android:name=".HealthBlogActivity"/>
+        <activity android:name=".BlogDetailActivity"/>
+        <activity android:name=".DoctorProfileActivity"/>
+        <activity android:name=".UserProfileActivity"/>
+        <activity android:name=".SignupActivity"/>
+        <activity android:name=".EditProfileActivity"/>
+        <activity android:name=".SendRequestActivity"/>
+        <activity android:name=".AppointmentActivity"/>
+        <activity android:name=".MapActivity"/>
+        <activity android:name=".DoctorScheduleListActivity"/>
+        <activity android:name=".MapPickerActivity"/>
+        <activity android:name=".ScheduleDetailActivity"/>
+        <activity android:name=".BlogWritingActivity"/>
+
+
+
+
     </application>
+
+
 
 </manifest>

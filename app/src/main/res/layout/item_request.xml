@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="12dp"
+    android:background="?attr/actionModeBackground"
+    android:layout_marginBottom="10dp">
+
+
+    <TextView
+        android:id="@+id/requestMessage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Message from patient..."
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:textColor="#000"
+        android:layout_marginBottom="4dp"/>
+
+
+    <TextView
+        android:id="@+id/clinicNameText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Clinic: Evercare Hospital"
+        android:textSize="14sp"
+        android:textColor="#333"
+        android:layout_marginBottom="2dp"/>
+
+
+    <TextView
+        android:id="@+id/clinicAddressText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Address: Dhanmondi, Dhaka"
+        android:textSize="14sp"
+        android:textColor="#333"
+        android:layout_marginBottom="2dp"/>
+
+
+    <TextView
+        android:id="@+id/timestampText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Time: Sat, 22 Jun 2025 5:00 PM"
+        android:textSize="14sp"
+        android:textColor="#333"
+        android:layout_marginBottom="8dp"/>
+
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <Button
+            android:id="@+id/acceptBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Accept"
+            android:layout_marginEnd="8dp"/>
+
+        <Button
+            android:id="@+id/declineBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Decline"/>
+    </LinearLayout>
+</LinearLayout>

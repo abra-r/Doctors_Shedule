@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="20dp"
+    android:background="@color/white">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Sign Up"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="20dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Select Role"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="10dp"/>
+
+        <RadioGroup
+            android:id="@+id/roleRadioGroup"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/generalUserRadio"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="User"
+                android:checked="true"/>
+
+            <RadioButton
+                android:id="@+id/doctorRadio"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Doctor"/>
+
+            <RadioButton
+                android:id="@+id/clinicManagerRadio"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Clinic"/>
+        </RadioGroup>
+
+        <!-- Common Fields -->
+        <EditText
+            android:id="@+id/emailSignUp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Email"
+            android:inputType="textEmailAddress"
+            android:layout_marginTop="10dp"/>
+
+        <EditText
+            android:id="@+id/passwordSignUp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Password"
+            android:inputType="textPassword"
+            android:layout_marginTop="10dp"/>
+
+        <EditText
+            android:id="@+id/confirmPasswordSignUp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Confirm Password"
+            android:inputType="textPassword"
+            android:layout_marginTop="10dp"/>
+
+        <!-- Doctor-Specific Fields -->
+        <LinearLayout
+            android:id="@+id/doctorFields"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <EditText
+                android:id="@+id/specialization"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Specialization"/>
+            <EditText
+                android:id="@+id/collage"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Collage"/>
+
+
+            <EditText
+                android:id="@+id/degree"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Degree"/>
+
+            <EditText
+                android:id="@+id/clinicName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Clinic/Hospital Name"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/clinicFields"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <EditText
+                android:id="@+id/licenseNumber"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="License Number"/>
+
+            <EditText
+                android:id="@+id/clinicAddress"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Clinic Address (manual or selected)"
+                android:focusable="false"
+                android:clickable="true"
+                android:inputType="text" />
+
+            <Button
+                android:id="@+id/pickLocationBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Pick from Map"
+                android:layout_marginTop="8dp"/>
+        </LinearLayout>
+
+
+        <Button
+            android:id="@+id/signUpButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Sign Up"
+            android:layout_marginTop="20dp"/>
+
+    </LinearLayout>
+</ScrollView>
