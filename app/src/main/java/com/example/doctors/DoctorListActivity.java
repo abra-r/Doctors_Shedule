@@ -23,7 +23,7 @@ public class DoctorListActivity extends AppCompatActivity {
     private List<Doctor> doctorList = new ArrayList<>();
 
 
-    private FirebaseFirestore db; // Firestore instance
+    private FirebaseFirestore db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,10 +38,10 @@ public class DoctorListActivity extends AppCompatActivity {
         doctorList = new ArrayList<>();
         doctorAdapter = new DoctorAdapter(doctorList, doctor -> {
             Intent intent = new Intent(DoctorListActivity.this, DoctorProfileActivity.class);
-            intent.putExtra("name", doctor.getName());
+            intent.putExtra("username", doctor.getName());
             intent.putExtra("specialty", doctor.getSpecialty());
             intent.putExtra("degree", doctor.getDegree());
-            intent.putExtra("uid", doctor.getUid());
+            intent.putExtra("doctorUid", doctor.getUid());
             startActivity(intent);
         });
 
@@ -62,12 +62,13 @@ public class DoctorListActivity extends AppCompatActivity {
 
                     for (com.google.firebase.firestore.QueryDocumentSnapshot document : querySnapshot) {
                         Doctor doctor = new Doctor(
-                                document.getId(), // 🔥 this is the UID
-                                document.getString("name"),
+                                document.getId(),
+                                document.getString("username"),
                                 document.getString("specialization"),
                                 document.getString("degree"),
-                                R.drawable.doctor_image // fallback image
+                                R.drawable.doctor_image
                         );
+
                         doctorList.add(doctor);
                     }
 

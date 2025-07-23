@@ -39,6 +39,7 @@ dependencies {
     implementation(libs.activity)
     implementation(libs.constraintlayout)
     implementation(libs.play.services.maps)
+    implementation(libs.firebase.config)
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
@@ -47,11 +48,13 @@ dependencies {
     implementation(libs.firebase.database)
     implementation(libs.firebase.storage)
     implementation(libs.firebase.messaging)
-
     implementation(libs.appcompat.v141)
     implementation(libs.constraintlayout.v213)
     implementation(libs.material.v140)
     implementation(libs.glide)
+    implementation(libs.okhttp)
+    implementation(libs.gson)
+    implementation(libs.google.firebase.messaging.v2310);
     annotationProcessor(libs.compiler)
 
 

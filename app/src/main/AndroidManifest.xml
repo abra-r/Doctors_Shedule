@@ -47,6 +47,11 @@
         <activity android:name=".MapPickerActivity"/>
         <activity android:name=".ScheduleDetailActivity"/>
         <activity android:name=".BlogWritingActivity"/>
+        <activity android:name=".ClinicRequestActivity"/>
+        <activity android:name=".MyScheduleActivity"/>
+        <activity android:name=".BotChatActivity"/>
+        <activity android:name=".AppointmentRequestListActivity"/>
+        <activity android:name=".AppointedPatientsActivity"/>
 
 
 

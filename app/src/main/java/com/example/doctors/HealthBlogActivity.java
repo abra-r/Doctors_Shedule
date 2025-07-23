@@ -38,6 +38,7 @@ public class HealthBlogActivity extends AppCompatActivity {
 
         fabAddBlog = findViewById(R.id.fab_add_blog);
         fabAddBlog.setVisibility(View.GONE);
+        NavigationHelper.setupNavigation(this);
 
         mAuth = FirebaseAuth.getInstance();
         firestore = FirebaseFirestore.getInstance();
@@ -62,11 +63,13 @@ public class HealthBlogActivity extends AppCompatActivity {
             startActivity(new Intent(this, BlogWritingActivity.class));
         });
 
+
         blogList = new ArrayList<>();
         blogAdapter = new BlogAdapter(this, blogList);
         blogRecyclerView.setAdapter(blogAdapter);
 
         loadBlogsFromFirestore();
+
     }
 
     private void loadBlogsFromFirestore() {

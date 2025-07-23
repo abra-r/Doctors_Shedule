@@ -7,14 +7,12 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.*;
-
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import androidx.appcompat.app.AppCompatActivity;
-
-import com.google.firebase.database.DatabaseError;
 
 public class DoctorProfileActivity extends AppCompatActivity {
 
@@ -22,15 +20,13 @@ public class DoctorProfileActivity extends AppCompatActivity {
     private TextView doctorName, doctorSpecialty, doctorDegree, doctorDescription, doctorContact, doctorSchedule;
     private Button getAppointmentBtn, sendRequestBtn;
 
-    private boolean isClinic = false;
-
+    private String doctorUid;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.doctor_profile);
 
-        // Bind views
         doctorProfileImage = findViewById(R.id.doctorImage);
         doctorName = findViewById(R.id.doctorName);
         doctorSpecialty = findViewById(R.id.doctorSpecialty);
@@ -41,57 +37,70 @@ public class DoctorProfileActivity extends AppCompatActivity {
         getAppointmentBtn = findViewById(R.id.getAppointmentBtn);
         sendRequestBtn = findViewById(R.id.sendRequestBtn);
 
-
         sendRequestBtn.setVisibility(View.GONE);
 
-
         Intent intent = getIntent();
-        String doctorUid;
-
         if (intent != null) {
-            String name = intent.getStringExtra("name");
-            doctorUid = intent.getStringExtra("uid"); //
+            doctorUid = intent.getStringExtra("doctorUid");
 
-            doctorName.setText(name);
-            doctorSpecialty.setText(intent.getStringExtra("specialty"));
-            doctorDegree.setText(intent.getStringExtra("degree"));
-            doctorDescription.setText("Dr. " + name + " is a well-experienced specialist.");
-            doctorContact.setText("+1234567890");
-            doctorSchedule.setText("Mon-Fri: 10AM - 2PM");
-        } else {
-            doctorUid = null;
+            if (doctorUid != null && !doctorUid.isEmpty()) {
+                loadDoctorProfile(doctorUid);
+            } else {
+                doctorName.setText("Doctor UID not found");
+            }
         }
-
 
         FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
         if (currentUser != null) {
             SharedPreferences prefs = getSharedPreferences("UserPrefs", MODE_PRIVATE);
             String role = prefs.getString("role", null);
 
-                        if ("clinic_manager".equals(role)) {
-                            sendRequestBtn.setVisibility(View.VISIBLE);
-
-                        }
-                        else
-                        {
-                            sendRequestBtn.setVisibility(View.GONE);
-
-                        }
+            if ("clinic_manager".equals(role)) {
+                sendRequestBtn.setVisibility(View.VISIBLE);
+            }
         }
 
         getAppointmentBtn.setOnClickListener(v -> {
-            Intent appointmentIntent = new Intent(DoctorProfileActivity.this, AppointmentActivity.class);
-            appointmentIntent.putExtra("doctorName", doctorName.getText().toString());
+            Intent appointmentIntent = new Intent(DoctorProfileActivity.this, DoctorScheduleListActivity.class);
+            appointmentIntent.putExtra("doctorUid", doctorUid);
             startActivity(appointmentIntent);
         });
 
         sendRequestBtn.setOnClickListener(v -> {
             Intent sendIntent = new Intent(DoctorProfileActivity.this, SendRequestActivity.class);
-            sendIntent.putExtra("doctorName", doctorName.getText().toString());
             sendIntent.putExtra("doctorUid", doctorUid);
-
+            sendIntent.putExtra("username", doctorName.getText().toString());
             startActivity(sendIntent);
         });
+
+        NavigationHelper.setupNavigation(this);
+    }
+
+    private void loadDoctorProfile(String uid) {
+        FirebaseFirestore.getInstance().collection("users")
+                .document(uid)
+                .get()
+                .addOnSuccessListener(doc -> {
+                    if (doc.exists()) {
+                        String name = doc.getString("username");
+                        String specialty = doc.getString("specialization");
+                        String degree = doc.getString("degree");
+                        String contact = doc.getString("phone");
+                        String about = doc.getString("about");
+
+                        doctorName.setText(name != null ? name : "N/A");
+                        doctorSpecialty.setText(specialty != null ? specialty : "N/A");
+                        doctorDegree.setText(degree != null ? degree : "N/A");
+                        doctorContact.setText(contact != null ? contact : "Not available");
+                        doctorDescription.setText(about != null ? about : "No description provided");
+
+
+                        doctorSchedule.setText("Mon-Fri: 10AM - 2PM");
+                    } else {
+                        doctorName.setText("Doctor not found");
+                    }
+                })
+                .addOnFailureListener(e -> doctorName.setText("Error loading profile"));
     }
 
 }

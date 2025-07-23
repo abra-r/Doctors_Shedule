@@ -1,6 +1,7 @@
 package com.example.doctors;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
@@ -83,12 +84,17 @@ public class LoginActivity extends AppCompatActivity {
                 String role = task.getResult().getString("role");
                 String name = task.getResult().getString("username");
 
-                getSharedPreferences("UserPrefs", MODE_PRIVATE)
-                        .edit()
-                        .putString("role", role)
-                        .putString("uid", userId)
-                        .putString("username", name)
-                        .apply();
+                SharedPreferences.Editor editor = getSharedPreferences("UserPrefs", MODE_PRIVATE).edit();
+                editor.putString("role", role);
+                editor.putString("uid", userId);
+                editor.putString("username", name);
+
+                if ("clinic_manager".equals(role)) {
+                    editor.putString("clinicUid", userId);
+                }
+
+                editor.apply();
+
 
                 navigateToRoleSpecificScreen(role);
             } else {

@@ -4,9 +4,9 @@
     android:padding="16dp">
 
     <LinearLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_height="wrap_content">
 
         <ImageView
             android:id="@+id/profilePictureImageView"
@@ -19,7 +19,8 @@
             android:id="@+id/changePictureBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Change Picture" />
+            android:text="Change Picture"
+            android:layout_gravity="center" />
 
         <EditText
             android:id="@+id/userNameEditText"
@@ -31,32 +32,45 @@
             android:id="@+id/specializationEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Specialization (for doctors)" />
+            android:hint="Specialization (for doctors)"
+            android:visibility="gone" />
 
         <EditText
             android:id="@+id/degreeEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Degree (for doctors)" />
+            android:hint="Degree (for doctors)"
+            android:visibility="gone" />
 
         <EditText
             android:id="@+id/licenseEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="License Number (for clinic managers)" />
+            android:hint="License Number (for clinic managers)"
+            android:visibility="gone" />
 
         <EditText
             android:id="@+id/clinicAddressEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Clinic Address (for clinic managers)" />
+            android:hint="Clinic Address (for clinic managers)"
+            android:visibility="gone" />
+
+        <EditText
+            android:id="@+id/aboutEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="About"
+            android:minLines="3"
+            android:gravity="top|start" />
 
         <Button
             android:id="@+id/saveProfileBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Save Profile" />
+            android:text="Save Profile"
+            android:layout_marginTop="16dp"
+            android:layout_gravity="center_horizontal" />
 
     </LinearLayout>
-
 </ScrollView>

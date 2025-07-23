@@ -7,7 +7,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-
+    <!-- Navigation drawer menu -->
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/homePage"
         android:layout_width="match_parent"
@@ -16,92 +16,134 @@
 
         <include
             android:id="@+id/toolbar"
-            layout="@layout/toolbar"/>
-
-
+            layout="@layout/toolbar" />
 
         <ImageView
             android:id="@+id/listOfDoctorCard"
-            android:layout_width="0dp"
-            android:layout_height="200dp"
+            android:layout_width="176dp"
+            android:layout_height="157dp"
             android:layout_margin="8dp"
+            android:layout_marginTop="24dp"
             android:clickable="true"
+            android:contentDescription="@string/listofdoctorcard"
             android:focusable="true"
             android:foreground="?attr/selectableItemBackground"
-            android:contentDescription="@string/listofdoctorcard"
-            app:srcCompat="@drawable/doctor_list_icon"
-            app:layout_constraintTop_toBottomOf="@id/toolbar"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/healthBlogCard"
-            app:layout_constraintWidth_percent="0.5" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/toolbar"
+            app:layout_constraintWidth_percent="0.5"
+            app:srcCompat="@drawable/doctor_list_icon" />
 
         <ImageView
             android:id="@+id/healthBlogCard"
-            android:layout_width="0dp"
-            android:layout_height="200dp"
+            android:layout_width="176dp"
+            android:layout_height="157dp"
             android:layout_margin="8dp"
+            android:layout_marginTop="4dp"
             android:clickable="true"
+            android:contentDescription="@string/healthblogcard"
             android:focusable="true"
             android:foreground="?attr/selectableItemBackground"
-            android:contentDescription="@string/healthblogcard"
-            app:srcCompat="@drawable/blog_icon"
-            app:layout_constraintTop_toBottomOf="@id/toolbar"
-            app:layout_constraintStart_toEndOf="@id/listOfDoctorCard"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintWidth_percent="0.5" />
-
-
+            app:layout_constraintStart_toEndOf="@id/listOfDoctorCard"
+            app:layout_constraintTop_toBottomOf="@id/toolbar"
+            app:layout_constraintWidth_percent="0.5"
+            app:srcCompat="@drawable/blog_icon" />
 
         <ImageView
             android:id="@+id/doctorNearMeCard"
-            android:layout_width="0dp"
-            android:layout_height="200dp"
+            android:layout_width="176dp"
+            android:layout_height="157dp"
             android:layout_margin="8dp"
+            android:layout_marginTop="8dp"
             android:clickable="true"
             android:focusable="true"
             android:foreground="?attr/selectableItemBackground"
-            android:src="@android:drawable/ic_menu_mapmode"
-            app:layout_constraintTop_toBottomOf="@id/listOfDoctorCard"
-            app:layout_constraintStart_toStartOf="parent"
+            android:src="@drawable/doctors_near_me"
             app:layout_constraintEnd_toStartOf="@+id/doctorScheduleCard"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/listOfDoctorCard"
             app:layout_constraintWidth_percent="0.5" />
 
         <ImageView
             android:id="@+id/doctorScheduleCard"
-            android:layout_width="177dp"
-            android:layout_height="199dp"
+            android:layout_width="176dp"
+            android:layout_height="157dp"
             android:layout_margin="8dp"
+            android:layout_marginTop="8dp"
             android:clickable="true"
             android:focusable="true"
             android:foreground="?attr/selectableItemBackground"
-            android:src="@drawable/schedule_icon"
+            android:src="@drawable/doctors_schedule"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/doctorNearMeCard"
             app:layout_constraintTop_toBottomOf="@id/listOfDoctorCard"
-            app:layout_constraintWidth_percent=".49" />
+            app:layout_constraintWidth_percent="0.5" />
 
-
-        <ScrollView
+        <Button
+            android:id="@+id/btn_my_appointments"
             android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginBottom="16dp"
-            android:fillViewport="true"
-            app:layout_constraintTop_toBottomOf="@+id/doctorNearMeCard"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:backgroundTint="#507ED1"
+            android:clickable="true"
+            android:focusable="true"
+            android:text="My Appointment Requests"
+            android:textAllCaps="false"
+            android:textColor="@android:color/white"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent">
+            app:layout_constraintTop_toBottomOf="@+id/doctorScheduleCard" />
 
-            <LinearLayout
-                android:id="@+id/requestContainer"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="12dp"/>
-        </ScrollView>
+        <Button
+            android:id="@+id/btn_schedule"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:backgroundTint="#507ED1"
+            android:clickable="true"
+            android:focusable="true"
+            android:text="Schedule"
+            android:textAllCaps="false"
+            android:textColor="@android:color/white"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btn_my_appointments" />
+
+        <Button
+            android:id="@+id/btn_appointment_requests"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:backgroundTint="#507ED1"
+            android:text="Appointment Requests"
+            android:textColor="@android:color/white"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btn_schedule" />
+
+
+        <ImageView
+            android:id="@+id/fab_chat"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_margin="16dp"
+            android:background="@android:color/transparent"
+            android:clickable="true"
+            android:contentDescription="Chat"
+            android:focusable="true"
+            android:src="@drawable/ic_chat"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-
 
     <com.google.android.material.navigation.NavigationView
         android:id="@+id/navigation_view"

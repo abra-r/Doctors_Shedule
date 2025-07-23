@@ -30,6 +30,7 @@ public class SendRequestActivity extends AppCompatActivity {
     private FirebaseUser currentUser;
 
     private String clinicName = "", clinicAddress = "";
+    private String doctorUid = "", doctorName = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,47 +49,87 @@ public class SendRequestActivity extends AppCompatActivity {
         firestore = FirebaseFirestore.getInstance();
         currentUser = FirebaseAuth.getInstance().getCurrentUser();
 
-        String doctorUid = getIntent().getStringExtra("doctorUid");
-        String doctorName = getIntent().getStringExtra("doctorName");
+        doctorUid = getIntent().getStringExtra("doctorUid");
+        doctorName = getIntent().getStringExtra("username");
 
+        // Load clinic info
+        if (currentUser != null) {
+            firestore.collection("users")
+                    .document(currentUser.getUid())
+                    .get()
+                    .addOnSuccessListener(doc -> {
+                        String username = doc.getString("username");
+                        clinicName = (username != null) ? username : "Unknown Clinic";
+                        clinicAddress = doc.getString("clinicAddress");
 
-        firestore.collection("users")
-                .document(currentUser.getUid())
-                .get()
-                .addOnSuccessListener(doc -> {
-                    clinicName = doc.getString("clinicName");
-                    clinicAddress = doc.getString("clinicAddress");
-                    clinicNameText.setText(clinicName);
-                    clinicAddressText.setText(clinicAddress);
-                });
-
+                        clinicNameText.setText(clinicName);
+                        clinicAddressText.setText(clinicAddress != null ? clinicAddress : "Not Set");
+                    });
+        }
 
         selectDateBtn.setOnClickListener(v -> {
             Calendar calendar = Calendar.getInstance();
-            new DatePickerDialog(this, (view, year, month, dayOfMonth) -> {
+            DatePickerDialog datePickerDialog = new DatePickerDialog(this, (view, year, month, dayOfMonth) -> {
                 Calendar selected = Calendar.getInstance();
                 selected.set(year, month, dayOfMonth);
                 String formattedDate = new SimpleDateFormat("EEEE, dd MMM yyyy", Locale.getDefault()).format(selected.getTime());
                 selectedDateText.setText(formattedDate);
-            }, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH)).show();
+            }, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
+
+
+            datePickerDialog.getDatePicker().setMinDate(calendar.getTimeInMillis());
+            datePickerDialog.show();
+
         });
 
-
         selectTimeBtn.setOnClickListener(v -> {
-            Calendar calendar = Calendar.getInstance();
-            new TimePickerDialog(this, (view, hourOfDay, minute) -> {
+            String selectedDate = selectedDateText.getText().toString().trim();
+
+            if (selectedDate.isEmpty()) {
+                Toast.makeText(this, "Please select a date first", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            Calendar now = Calendar.getInstance();
+            int currentHour = now.get(Calendar.HOUR_OF_DAY);
+            int currentMinute = now.get(Calendar.MINUTE);
+
+
+            Calendar today = Calendar.getInstance();
+            String todayStr = new SimpleDateFormat("EEEE, dd MMM yyyy", Locale.getDefault()).format(today.getTime());
+
+            boolean isToday = selectedDate.equals(todayStr);
+
+            TimePickerDialog timePickerDialog = new TimePickerDialog(this, (view, hourOfDay, minute) -> {
+
+                if (isToday && (hourOfDay < currentHour || (hourOfDay == currentHour && minute < currentMinute))) {
+                    Toast.makeText(this, "Please select a future time", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
                 Calendar selected = Calendar.getInstance();
                 selected.set(Calendar.HOUR_OF_DAY, hourOfDay);
                 selected.set(Calendar.MINUTE, minute);
                 String formattedTime = new SimpleDateFormat("hh:mm a", Locale.getDefault()).format(selected.getTime());
                 selectedTimeText.setText(formattedTime);
-            }, calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE), false).show();
+            }, currentHour, currentMinute, false);
+
+            timePickerDialog.show();
         });
+
 
         sendBtn.setOnClickListener(v -> {
             String message = messageEditText.getText().toString().trim();
+            String appointmentDate = selectedDateText.getText().toString();
+            String appointmentTime = selectedTimeText.getText().toString();
+
             if (message.isEmpty()) {
                 Toast.makeText(this, "Message cannot be empty", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            if (appointmentDate.isEmpty() || appointmentTime.isEmpty()) {
+                Toast.makeText(this, "Please select date and time", Toast.LENGTH_SHORT).show();
                 return;
             }
 
@@ -99,13 +140,14 @@ public class SendRequestActivity extends AppCompatActivity {
 
             Map<String, Object> requestMap = new HashMap<>();
             requestMap.put("message", message);
-            requestMap.put("fromUid", currentUser.getUid());
+            requestMap.put("clinicUid", currentUser.getUid());
             requestMap.put("timestamp", System.currentTimeMillis());
             requestMap.put("status", "pending");
             requestMap.put("clinicName", clinicName);
             requestMap.put("clinicAddress", clinicAddress);
-            requestMap.put("appointmentDate", selectedDateText.getText().toString());
-            requestMap.put("appointmentTime", selectedTimeText.getText().toString());
+            requestMap.put("appointmentDate", appointmentDate);
+            requestMap.put("appointmentTime", appointmentTime);
+            requestMap.put("formattedDateTime", appointmentDate + " " + appointmentTime);
 
             firestore.collection("doctor_requests")
                     .document(doctorUid)
@@ -115,7 +157,11 @@ public class SendRequestActivity extends AppCompatActivity {
                         Toast.makeText(this, "Request sent to Dr. " + doctorName, Toast.LENGTH_SHORT).show();
                         finish();
                     })
-                    .addOnFailureListener(e -> Toast.makeText(this, "Failed: " + e.getMessage(), Toast.LENGTH_LONG).show());
+                    .addOnFailureListener(e ->
+                            Toast.makeText(this, "Failed: " + e.getMessage(), Toast.LENGTH_LONG).show()
+                    );
         });
+
+
     }
 }
