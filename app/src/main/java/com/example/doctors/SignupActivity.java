@@ -6,13 +6,12 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.RadioButton;
 import android.widget.RadioGroup;
-import android.widget.TextView;
 import android.widget.Toast;
+import androidx.appcompat.app.AppCompatActivity;
 
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
+
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -132,39 +131,48 @@ public class SignupActivity extends AppCompatActivity {
 
     private void saveUserData(String role) {
         String email = emailEditText.getText().toString().trim();
+        String username = email.split("@")[0];
 
 
-        String username = email.split("@")[0]; // everything before "@"
-
-        User user = new User(email, role);
-        user.setUsername(username);
+        PersonalInfo personalInfo = new PersonalInfo(email, username, role);
+        MedicalInfo medicalInfo = null;
+        ClinicInfo clinicInfo = null;
+        GeoLocation geoLocation = null;
 
         if (role.equals("doctor")) {
             String specialization = ((EditText) findViewById(R.id.specialization)).getText().toString().trim();
             String degree = ((EditText) findViewById(R.id.degree)).getText().toString().trim();
+            String college = ((EditText) findViewById(R.id.collage)).getText().toString().trim();
 
-            user.setSpecialization(specialization);
-            user.setDegree(degree);
-        } else if (role.equals("clinic_manager")) {
+            medicalInfo = new MedicalInfo(specialization, college, degree);
+        }
+
+        if (role.equals("clinic_manager")) {
             String licenseNumber = ((EditText) findViewById(R.id.licenseNumber)).getText().toString().trim();
             String clinicAddress = ((EditText) findViewById(R.id.clinicAddress)).getText().toString().trim();
-            String clinicAddressInText = ((EditText) findViewById(R.id.clinicAddress)).getText().toString().trim();
-            user.setClinicAddress(clinicAddressInText);
-            user.setLatitude(selectedLat);
-            user.setLongitude(selectedLng);
+            String clinicName = ((EditText) findViewById(R.id.clinicName)).getText().toString().trim();
 
-
-            user.setLicenseNumber(licenseNumber);
-            user.setClinicAddress(clinicAddress);
+            clinicInfo = new ClinicInfo(clinicName, clinicAddress, licenseNumber);
+            geoLocation = new GeoLocation(selectedLat, selectedLng);
         }
+
+        User user = new User.Builder()
+                .setPersonalInfo(personalInfo)
+                .setMedicalInfo(medicalInfo)
+                .setClinicInfo(clinicInfo)
+                .setGeoLocation(geoLocation)
+                .build();
 
         db.collection("users").document(mAuth.getCurrentUser().getUid())
                 .set(user)
                 .addOnSuccessListener(aVoid -> {
                     Toast.makeText(SignupActivity.this, "User data saved successfully.", Toast.LENGTH_SHORT).show();
                 })
-                .addOnFailureListener(e -> Toast.makeText(SignupActivity.this, "Failed to save user data.", Toast.LENGTH_SHORT).show());
+                .addOnFailureListener(e -> {
+                    Toast.makeText(SignupActivity.this, "Failed to save user data.", Toast.LENGTH_SHORT).show();
+                });
     }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);

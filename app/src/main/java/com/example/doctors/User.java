@@ -2,119 +2,63 @@ package com.example.doctors;
 
 public class User {
 
-    private String email;
-    private String role;
-    private String specialization;
-    private String collage;
-    private String degree;
-    private String clinicName;
-    private String licenseNumber;
-    private String clinicAddress;
-    private String username;
+    private PersonalInfo personalInfo;
+    private MedicalInfo medicalInfo;
+    private ClinicInfo clinicInfo;
+    private GeoLocation geoLocation;
 
-    private double latitude;
-    private double longitude;
-
-    public void setLatitude(double latitude) { this.latitude = latitude; }
-    public void setLongitude(double longitude) { this.longitude = longitude; }
-
-    public double getLatitude() { return latitude; }
-    public double getLongitude() { return longitude; }
-
-
-    public String getUsername() {
-        return username;
+    private User(Builder builder) {
+        this.personalInfo = builder.personalInfo;
+        this.medicalInfo = builder.medicalInfo;
+        this.clinicInfo = builder.clinicInfo;
+        this.geoLocation = builder.geoLocation;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public PersonalInfo getPersonalInfo() {
+        return personalInfo;
     }
 
-    public User() {
+    public MedicalInfo getMedicalInfo() {
+        return medicalInfo;
     }
 
-
-    public User(String email, String role) {
-        this.email = email;
-        this.role = role;
+    public ClinicInfo getClinicInfo() {
+        return clinicInfo;
     }
 
-
-    public User(String email, String role, String specialization, String collage, String degree,
-                String clinicName, String licenseNumber, String clinicAddress) {
-        this.email = email;
-        this.role = role;
-        this.specialization = specialization;
-        this.collage = collage;
-        this.degree = degree;
-        this.clinicName = clinicName;
-        this.licenseNumber = licenseNumber;
-        this.clinicAddress = clinicAddress;
+    public GeoLocation getGeoLocation() {
+        return geoLocation;
     }
 
+    
+    public static class Builder {
+        private PersonalInfo personalInfo;
+        private MedicalInfo medicalInfo;
+        private ClinicInfo clinicInfo;
+        private GeoLocation geoLocation;
 
-    public String getEmail() {
-        return email;
-    }
+        public Builder setPersonalInfo(PersonalInfo personalInfo) {
+            this.personalInfo = personalInfo;
+            return this;
+        }
 
-    public String getRole() {
-        return role;
-    }
+        public Builder setMedicalInfo(MedicalInfo medicalInfo) {
+            this.medicalInfo = medicalInfo;
+            return this;
+        }
 
-    public String getSpecialization() {
-        return specialization;
-    }
+        public Builder setClinicInfo(ClinicInfo clinicInfo) {
+            this.clinicInfo = clinicInfo;
+            return this;
+        }
 
-    public String getCollage() {
-        return collage;
-    }
+        public Builder setGeoLocation(GeoLocation geoLocation) {
+            this.geoLocation = geoLocation;
+            return this;
+        }
 
-    public String getDegree() {
-        return degree;
-    }
-
-    public String getClinicName() {
-        return clinicName;
-    }
-
-    public String getLicenseNumber() {
-        return licenseNumber;
-    }
-
-    public String getClinicAddress() {
-        return clinicAddress;
-    }
-
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public void setRole(String role) {
-        this.role = role;
-    }
-
-    public void setSpecialization(String specialization) {
-        this.specialization = specialization;
-    }
-
-    public void setCollage(String collage) {
-        this.collage = collage;
-    }
-
-    public void setDegree(String degree) {
-        this.degree = degree;
-    }
-
-    public void setClinicName(String clinicName) {
-        this.clinicName = clinicName;
-    }
-
-    public void setLicenseNumber(String licenseNumber) {
-        this.licenseNumber = licenseNumber;
-    }
-
-    public void setClinicAddress(String clinicAddress) {
-        this.clinicAddress = clinicAddress;
+        public User build() {
+            return new User(this);
+        }
     }
 }
