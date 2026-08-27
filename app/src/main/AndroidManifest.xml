@@ -28,7 +28,7 @@
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyB44EPbEm297aN27YKUY0j8QYEugcrD9Ss"/>
+            android:value="Google Pi key"/>
 
 
         <activity android:name=".LoginActivity"/>
